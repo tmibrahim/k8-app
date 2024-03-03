@@ -16,17 +16,12 @@ spec:
     spec:
       containers:
         - name: vprodb
-          image: itmrnetworks/vprofiledb:latest
-          resources:
-            limits:
-              cpu: "1"
-              memory: "1Gi"
-            requests:
-              cpu: "0.5"
-              memory: "512Mi"
+          image: itmrnetworks/vprofiledb
+          securityContext:
+            runAsUser: 999
           volumeMounts:
-            - name: vpro-db-data
-              mountPath: /var/lib/mysql
+            - mountPath: /var/lib/mysql
+              name: vpro-db-data
           ports:
             - name: vprodb-port
               containerPort: 3306
@@ -37,11 +32,11 @@ spec:
                   name: app-secret
                   key: db-pass
       nodeSelector:
-        zone: eu-west-1a
+        topology.kubernetes.io/zone: eu-west-1a
       volumes:
         - name: vpro-db-data
           awsElasticBlockStore:
-            volumeID: vol-0dd9c6b4294aa1543
+            volumeID: vol-01677ce2ee579c6a2
             fsType: ext4
       initContainers:
         - name: busybox
