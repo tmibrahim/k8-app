@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: vprodb
-          image: itmrnetworks/vprofiledb
+          image: vprofile/vprofiledb
           securityContext:
             runAsUser: 999
           volumeMounts:
